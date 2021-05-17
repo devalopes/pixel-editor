@@ -29,7 +29,7 @@ impl Image {
 
     #[wasm_bindgen(constructor)]
     pub fn new(width: usize, height: usize) -> Image {
-        let mut cells = vec![RGB { r: 200, g: 200, b: 255 }; width * height];
+        let cells = vec![RGB { r: 200, g: 200, b: 255 }; width * height];
         Image {width, height, cells}
     }
 
@@ -50,7 +50,7 @@ impl Image {
     }
 
     pub fn brush(&mut self, x: usize, y: usize, color: Vec<u8>) {
-        let index = (y * self.width) + x;
+        let index = y * self.width + x;
         self.cells[index] = RGB{r: color[0], g: color[1], b: color[2]};
     }
 }
