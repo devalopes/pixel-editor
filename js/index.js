@@ -1,12 +1,12 @@
 const cellSize = 50;
-const canvas = document.getElementById("pixel-canvas")
+const cellsX = 10;
+const cellsY = 10;
+const canvas = document.getElementById("pixel-canvas");
 
 
 function draw(state) {
     const context = canvas.getContext("2d");
 
-    // context.fillStyle = "red";
-    // context.fillRect(10, 10, 50, 50);
     context.strokeStyle = "black"
     context.lineWidth = 1;
     
@@ -107,7 +107,7 @@ function setupCanvas(state) {
 
 async function main() {
     const lib = await import("../pkg/index.js").catch(console.error);
-    const image = new lib.Image(10, 10);
+    const image = new lib.Image(cellsX, cellsY);
 
     const state = {
         image,

@@ -1,0 +1,8 @@
+canvas {
+    display: block;
+    margin: 0 auto;
+}
+.controls {
+  display: flex;
+  justify-content: center;
+}
