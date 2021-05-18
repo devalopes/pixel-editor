@@ -1,7 +1,8 @@
 const cellSize = 50;
+const canvas = document.getElementById("pixel-canvas")
+
 
 function draw(state) {
-    const canvas = document.getElementById("pixel-canvas");
     const context = canvas.getContext("2d");
 
     // context.fillStyle = "red";
@@ -41,22 +42,40 @@ function draw(state) {
 
 }
 
+function changeCanvas(event, state) {
+    const rect = canvas.getBoundingClientRect();
+
+    let x = event.clientX  - rect.left;
+    let y = event.clientY - rect.top;
+
+    x = Math.floor(x / cellSize);
+    y = Math.floor(y / cellSize);
+
+    if (x < 0 
+        || y < 0 
+        || x > state.image.width() - 1 
+        || y > state.image.height() - 1) {
+        return;
+    }
+
+    const image = state.image;
+    image.brush(x, y, state.currentColor);
+    draw(state);
+}
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? [
+      parseInt(result[1], 16),
+      parseInt(result[2], 16),
+      parseInt(result[3], 16)
+     ] : null;
+  }
+
 function setupCanvas(state) {
-    const canvas = document.getElementById("pixel-canvas")
 
     canvas.addEventListener('click', event => {
-        const rect = canvas.getBoundingClientRect();
-
-        let x = event.clientX  - rect.left;
-        let y = event.clientY - rect.top;
-
-        x = Math.floor(x / cellSize);
-        y = Math.floor(y / cellSize);
-        
-        const image = state.image;
-        image.brush(x, y, state.currentColor);
-
-        draw(state);
+        changeCanvas(event, state)
     });
 
     canvas.addEventListener("mousedown", event => {
@@ -69,28 +88,21 @@ function setupCanvas(state) {
         if(!state.dragging) {
             return;
         }
-        const rect = canvas.getBoundingClientRect();
+        changeCanvas(event, state)
+    });
 
-        let x = event.clientX  - rect.left;
-        let y = event.clientY - rect.top;
+    const colorpicker = document.getElementById("color")
+    colorpicker.addEventListener("change", (event) => {
+        state.currentColor = hexToRgb(colorpicker.value)
+    });
 
-        x = Math.floor(x / cellSize);
-        y = Math.floor(y / cellSize);
-        
-        const image = state.image;
-        image.brush(x, y, state.currentColor);
+    document.getElementById("white").addEventListener("click", (event) =>{
+        state.currentColor = [255, 255, 255]
+    })
 
-        draw(state);
-    });
-    document.getElementById("red").addEventListener("click", (event) => {
-        state.currentColor = [255, 200, 200]
-    });
-    document.getElementById("green").addEventListener("click", (event) => {
-        state.currentColor = [200, 255, 200]
-    });
-    document.getElementById("blue").addEventListener("click", (event) => {
-        state.currentColor = [200, 200, 255]
-    });
+    document.getElementById("black").addEventListener("click", (event) =>{
+        state.currentColor = [0, 0, 0]
+    })
 }
 
 async function main() {
@@ -99,7 +111,7 @@ async function main() {
 
     const state = {
         image,
-        currentColor: [200, 255, 200],
+        currentColor: [0, 0, 0],
         dragging: false
     };
 

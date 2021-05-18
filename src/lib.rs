@@ -1,6 +1,4 @@
 use wasm_bindgen::prelude::*;
-use web_sys::console;
-
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
@@ -29,7 +27,7 @@ impl Image {
 
     #[wasm_bindgen(constructor)]
     pub fn new(width: usize, height: usize) -> Image {
-        let cells = vec![RGB { r: 200, g: 200, b: 255 }; width * height];
+        let cells = vec![RGB { r: 255, g: 255, b: 255 }; width * height];
         Image {width, height, cells}
     }
 
