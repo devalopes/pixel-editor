@@ -1,6 +1,6 @@
-const cellSize = 50;
-const cellsX = 10;
-const cellsY = 10;
+const cellSize = 25;
+const cellsX = 20;
+const cellsY = 20;
 const canvas = document.getElementById("pixel-canvas");
 
 
