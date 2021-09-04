@@ -1,4 +1,8 @@
 ## How to install
+* Ensure `rust` is instaled
+* Ensure `wasm-pack` is installed: `curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh`
+* `npm i`
+* `npm start`
 
 ```sh
 npm install
